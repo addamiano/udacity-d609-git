@@ -1,4 +1,4 @@
-# Starter Data for the STEDI Human Balance Analysis project
+# Starter Data for the STEDI Human Balance Analysis project.
 
 # Overview
 
