@@ -23,10 +23,12 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args["JOB_NAME"], args)
 
-# Read all accelerometer data from landing zone
-AccelerometerLanding_node1 = glueContext.create_dynamic_frame.from_catalog(
-    database="stedi",
-    table_name="accelerometer_landing",
+# Read all accelerometer data from S3 bucket
+AccelerometerLanding_node1 = glueContext.create_dynamic_frame.from_options(
+    format_options={"multiline": False},
+    connection_type="s3",
+    format="json",
+    connection_options={"paths": ["s3://stedi-damiano-d609/accelerometer/landing/"]},
     transformation_ctx="AccelerometerLanding_node1",
 )
 

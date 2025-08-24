@@ -23,10 +23,12 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args["JOB_NAME"], args)
 
-# Read all step trainer device data from landing zone
-StepTrainerLanding_node1 = glueContext.create_dynamic_frame.from_catalog(
-    database="stedi",
-    table_name="step_trainer_landing",
+# Read all step trainer device data from S3 bucket
+StepTrainerLanding_node1 = glueContext.create_dynamic_frame.from_options(
+    format_options={"multiline": False},
+    connection_type="s3",
+    format="json",
+    connection_options={"paths": ["s3://stedi-damiano-d609/step_trainer/landing/"]},
     transformation_ctx="StepTrainerLanding_node1",
 )
 

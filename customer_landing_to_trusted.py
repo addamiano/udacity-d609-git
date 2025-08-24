@@ -25,10 +25,12 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args["JOB_NAME"], args)
 
-# Read all customer data from landing table
-CustomerLanding_node1 = glueContext.create_dynamic_frame.from_catalog(
-    database="stedi",
-    table_name="customer_landing",
+# Read all customer data from S3 bucket
+CustomerLanding_node1 = glueContext.create_dynamic_frame.from_options(
+    format_options={"multiline": False},
+    connection_type="s3",
+    format="json",
+    connection_options={"paths": ["s3://stedi-damiano-d609/customer/landing/"]},
     transformation_ctx="CustomerLanding_node1",
 )
 
